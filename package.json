@@ -19,7 +19,8 @@
     "ntlm"
   ],
   "dependencies" : {
-  "ravendb": "0.0.18"
+  "ravendb": "0.0.18",
+  "portchecker": "0.x.x"
   },
   "noAnalyze": true,
   "devDependencies": {
