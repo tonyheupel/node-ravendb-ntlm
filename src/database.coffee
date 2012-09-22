@@ -7,16 +7,20 @@ portchecker = require('portchecker')
 Database = ravendb.Database
 
 
-Database.prototype.useNTLM = (domain, username, password, cb) ->
-  getPort = (cb) ->
-    portchecker.getFirstAvailable 5000, 6000, 'localhost', (port, host) ->
-      cb(port, host)
+Database.prototype.useNTLM = (domain, username, password, proxyHost='localhost', port=null, cb=null) ->
 
   user_pwd = new Buffer("#{username}:#{password}").toString('base64')
   @setAuthorization "Basic #{user_pwd}"
 
-  if @ntlm?
-    return false
+  cb(@ntlm) if @ntlm? and @cb?
+
+  if port?
+    getPort = (getPortCallback) ->
+      getPortCallback(port, proxyHost)
+  else
+    getPort = (getPortCallback) ->
+      portchecker.getFirstAvailable 5000, 6000, proxyHost, getPortCallback
+
 
   getPort (port, host) =>
     try
