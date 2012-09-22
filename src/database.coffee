@@ -3,11 +3,11 @@ spawn = require('child_process').spawn
 portchecker = require('portchecker')
 
 
-# ravendb() returns an instance of Database, so using __proto__ updates the class
-Database = ravendb().__proto__
+# Get a reference to the Database class
+Database = ravendb.Database
 
 
-Database.useNTLM = (domain, username, password, cb) ->
+Database.prototype.useNTLM = (domain, username, password, cb) ->
   getPort = (cb) ->
     portchecker.getFirstAvailable 5000, 6000, 'localhost', (port, host) ->
       cb(port, host)
