@@ -9,19 +9,26 @@ Database = ravendb.Database
 
 Database.prototype.useNTLM = (domain, username, password, proxyHost='localhost', port=null, cb=null) ->
 
-  user_pwd = new Buffer("#{username}:#{password}").toString('base64')
-  @setAuthorization "Basic #{user_pwd}"
+  @setBasicAuthorization username, password
 
-  cb(@ntlm) if @ntlm? and @cb?
+  if @ntlm?
+    if cb?
+      cb(@ntlm)
+    else
+      return
 
-  if port?
-    getPort = (getPortCallback) ->
-      getPortCallback(port, proxyHost)
-  else
-    getPort = (getPortCallback) ->
-      portchecker.getFirstAvailable 5000, 6000, proxyHost, getPortCallback
+  defineGetPort = (port, proxyHost) ->
+    if port?
+      getPort = (getPortCallback) ->
+        getPortCallback(port, proxyHost)
+    else
+      getPort = (getPortCallback) ->
+        portchecker.getFirstAvailable 5000, 6000, proxyHost, getPortCallback
+
+    getPort
 
 
+  getPort = defineGetPort port, proxyHost
   getPort (port, host) =>
     try
       ntlmaps = spawn 'python', ["#{__dirname}/../deps/ntlmaps/main.py",
