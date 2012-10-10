@@ -1,6 +1,6 @@
 {
   "name": "ravendb-ntlm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Tony Heupel <tonyheupel@gmail.com>",
   "description": "An add-on to the ravendb npm module for accessing Raven Databases with NTLM authentication",
   "contributors": [
@@ -19,7 +19,7 @@
     "ntlm"
   ],
   "dependencies" : {
-  "ravendb": ">=0.0.20",
+  "ravendb": ">=0.0.21",
   "portchecker": "0.x.x"
   },
   "noAnalyze": true,
