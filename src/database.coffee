@@ -13,7 +13,7 @@ Database.prototype.useNTLM = (domain, username, password, proxyHost='localhost',
 
   if @ntlm?
     cb(@ntlm) if cb?
-  return
+    return
 
   defineGetPort = (port, proxyHost) ->
     if port?
