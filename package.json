@@ -19,7 +19,7 @@
     "ntlm"
   ],
   "dependencies" : {
-  "ravendb": "0.0.20",
+  "ravendb": ">=0.0.20",
   "portchecker": "0.x.x"
   },
   "noAnalyze": true,
